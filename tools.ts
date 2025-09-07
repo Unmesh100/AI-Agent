@@ -1,3 +1,21 @@
+/**
+ * Formats a Date object to IST (Indian Standard Time) and UTC in brackets.
+ * Example output: "07/09/2025, 18:30:00 (UTC: 2025-09-07 13:00:00 UTC)"
+ */
+export function formatTimeISTWithUTC(date: Date): string {
+    // Format IST
+    const istString = date.toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour12: false,
+    });
+
+    // Format UTC
+    const utcDate = new Date(date.getTime());
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const utcString = `${utcDate.getUTCFullYear()}-${pad(utcDate.getUTCMonth() + 1)}-${pad(utcDate.getUTCDate())} ${pad(utcDate.getUTCHours())}:${pad(utcDate.getUTCMinutes())}:${pad(utcDate.getUTCSeconds())} UTC`;
+
+    return `${istString} (UTC: ${utcString})`;
+}
 export const openUrlTool = tool(
     async (params) => {
         const { url, browser } = params as { url: string; browser?: string };
