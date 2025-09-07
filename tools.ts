@@ -6,10 +6,13 @@ import { execSync } from 'child_process';
 export function autoCommit(message?: string) {
     // Stage all changes
     execSync('git add .', { stdio: 'inherit' });
-    // Use provided message or generate one
-    const commitMessage = message && message.trim().length > 0
-        ? message
-        : `Auto commit on ${new Date().toISOString()}`;
+    // Use provided message only if it's not empty or whitespace
+    let commitMessage: string;
+    if (typeof message === 'string' && message.trim().length > 0) {
+        commitMessage = message.trim();
+    } else {
+        commitMessage = `Auto commit on ${new Date().toISOString()}`;
+    }
     // Commit
     execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
 }
