@@ -1,4 +1,4 @@
-# calender-agent
+# ai-agent
 
 To install dependencies:
 
